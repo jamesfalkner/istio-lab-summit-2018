@@ -29,8 +29,8 @@ You will be provisioned your own machine with OpenShift pre-installed, along wit
 To setup your environment, simply run this command to log into the machine:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/scripts/connect.sh | \
-  bash $(hostname)
+curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/master/scripts/connect.sh | \
+  MACHINE_HOSTNAME=$(hostname) bash -
 ```
 
 Once connected, run the following command:
