@@ -29,7 +29,7 @@ You will be provisioned your own machine with OpenShift pre-installed, along wit
 To setup your environment, simply run this command to log into the machine:
 
 ```bash
-curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/scripts/connect.sh | \
+curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/master/scripts/connect.sh | \
   MACHINE_HOSTNAME=$(hostname) bash -
 ```
 
