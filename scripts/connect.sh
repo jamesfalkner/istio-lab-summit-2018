@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-echo "Script placeholder"
-echo "The hostname passed in is ${MACHINE_HOSTNAME}"
+export LC_MYIP=`dig $1 +short`
+ssh -o SendEnv=LC_MYIP root@$1
