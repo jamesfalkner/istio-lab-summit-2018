@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-echo "Script placeholder"
+export LC_MYIP=`dig $1 +short`
+ssh -o SendEnv=LC_MYIP root@$1
