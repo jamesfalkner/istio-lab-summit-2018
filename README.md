@@ -39,5 +39,5 @@ Once connected, run the following command:
 ~/start.sh
 ```
 
-This script will startup OpenShift and leave you at a command prompt, ready to start the lab. The code and files necessary can be found in `~/istio-lab`.
+This script will startup OpenShift and leave you at a command prompt, ready to start the labs.
 
