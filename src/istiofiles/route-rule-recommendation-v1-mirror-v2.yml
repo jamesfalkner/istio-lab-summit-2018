@@ -4,7 +4,6 @@ metadata:
   name: recommendation-mirror
 spec:
   destination:
-    namespace: tutorial
     name: recommendation
   precedence: 2
   route:
@@ -15,7 +14,6 @@ spec:
       version: v2
     weight: 0
   mirror:
-    namespace: tutorial
     name: recommendation
     labels:
       version: v2

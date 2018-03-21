@@ -4,7 +4,6 @@ metadata:
   name: recommendation-delay
 spec:
   destination:
-    namespace: tutorial
     name: recommendation
   precedence: 2
   route:

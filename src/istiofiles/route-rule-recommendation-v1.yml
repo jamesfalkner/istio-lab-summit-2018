@@ -4,7 +4,6 @@ metadata:
   name: recommendation-default
 spec:
   destination:
-    namespace: tutorial
     name: recommendation
   precedence: 1
   route:

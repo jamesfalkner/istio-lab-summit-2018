@@ -4,7 +4,6 @@ metadata:
   name: recommendation-safari
 spec:
   destination:
-    namespace: tutorial
     name: recommendation
   precedence: 2
   match:
