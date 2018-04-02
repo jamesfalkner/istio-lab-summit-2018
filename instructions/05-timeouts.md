@@ -1,4 +1,4 @@
-# Lab Title
+# Timeout
 
 In this Lab you wil lean how to induce timeout for a service as part of Istio Service Mesh.  With timeout set the service mesh will return failure if it does not get response within **N** seconds.
 
@@ -12,11 +12,13 @@ At this point, no other route rules should be in effect. `oc get routerules` and
 
 ## Step 2
 
-Change the configuration of `recommendation` service to use the docker image `recommendation-lab05:v2` which has the time simulation code.
+Change the configuration of `recommendation` service to use the docker image `recommendation:L5-v2` which has the time simulation code.
 
-**TODO** 
-
-Whats the best way ??? oc patch or oc apply of new kube deployment?
+```sh
+CONTAINER_NAME="recommendation"
+IMAGE="recommendation:v2d"
+oc patch deployment recommendation -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${CONTAINER_NAME}\",\"image\":\"${IMAGE}\"}]}}}}"
+```
 
 ## Step 3
 
