@@ -62,4 +62,4 @@ Congratulations you have successfully learnt how to create and apply an Istio Ti
 
 * [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)

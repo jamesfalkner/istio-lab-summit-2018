@@ -1,23 +1,22 @@
 # Access Control - Whitelisting
 
-In this lab we will learn how to **whitelist** i.e. to control the service to service access within the service mesh.
+In this lab we will learn how to **Whitelist** i.e. to control the service to service access within the service mesh.
 
 ## What you will learn
 
-* Define Service Whitelist rules
-  The Whitelist rule makes the preferences services accessible only from the recommendation service
+* Define **Whitelist** access control rules
 
 ## Step 1
 
-Create the whitelist rules:
+Create the **Whitelist** rules, this rule makes the _preferences_ services accessible only from the _recommendation_ service
 
 ```sh
-istioctl create -f src/istiofiles/acl-whitelist.yml -n <project name>
+istioctl create -f src/istiofiles/acl-whitelist.yml -n tutorial
 ```
 
 ## Step 2
 
-Lets now test the whitelisting by calling the service directly:
+Lets now test the **Whitelisting** by calling the service directly:
 
 ```sh
 curl customer-tutorial.$(minishift ip).nip.io 
@@ -29,18 +28,22 @@ Invoking the above curl command should result in:
 customer => 404 NOT_FOUND:preferencewhitelist.listchecker.tutorial:customer is not whitelisted
 ```
 
-The access returns `HTTP 404`, as preference service is accessible only from the recommendation service.
+Trying to access the customer service returns `HTTP 404`, as preference service is accessible only from the recommendation service.
 
 ## Step 3
 
-Lets rollback the changes that were done for this whitelisting lab:
+Lets rollback the changes that were done for this **Whitelisting** lab:
 
 ```sh
-istioctl delete -f src/istiofiles/acl-whitelist.yml -n <project-name>
+istioctl delete -f src/istiofiles/acl-whitelist.yml -n tutorial
 ```
+
+# Congratulations
+
+Congratulations you have successfully learnt how to define Access Control via **Whitelisting** inside a Istio service mesh
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)
