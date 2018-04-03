@@ -59,7 +59,7 @@ oc new-project $ISTIO_LAB_PROJECT
 oc adm policy add-scc-to-user privileged -z default -n $ISTIO_LAB_PROJECT
 ```
 
-We'll use the `istioctl` command line to create and install Istio components to OpenShift.
+We'll use the `oc` command line to create and install Istio components to OpenShift.
 
 ## Step 3: Deploy Customer service
 
@@ -244,13 +244,13 @@ OpenShift cluster is how you configure routing rules for Istio.
 In this case, let's route all traffic to `v2`:
 
 ```bash
-oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v2.yml -n ${PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v2.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 Inspect the rule:
 
 ```bash
-oc get routerule/recommendation-default
+oc get routerule/recommendation-default -o yaml
 ```
 
 And now access the `customer` service 10 times - all requests should end up talking to
@@ -267,7 +267,7 @@ done
 Now let's move everyone to `v1`:
 
 ```bash
-oc replace -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
+oc replace -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 > NOTE: We use `oc replace` instead of `oc create` since we are overlaying the previous rule
@@ -286,7 +286,7 @@ Now let's go back to the start, and remove the rules to get back to default roun
 of requests:
 
 ```bash
-oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
+oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 And test again:
@@ -303,13 +303,13 @@ Traffic should be equally split once again.
 To start the process, let's send 10% of the users to the `v2` version, to do a canary test:
 
 ```bash
-oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2.yml -n ${PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 Inspect the rule:
 
 ```bash
-oc get routerule/recommendation-v1-v2
+oc get routerule/recommendation-v1-v2 -o yaml
 ```
 
 You can see the use of the `weight` of each route to control the distribution of traffic.
@@ -328,14 +328,14 @@ it 10 million times you should get approximately 1 million requests to `v2`.
 Now let's move it to a 75/25 split:
 
 ```bash
-oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2_75_25.yml -n ${PROJECT}
+oc replace -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2_75_25.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 And issue 10 more requests:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${ISTIO_ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 Now you should see 2 or 3 requests (~25%) going to `v2`. This process can be continued (and automated), slowly migrating
@@ -344,7 +344,7 @@ traffic over to the new version as it proves its worth in production over time.
 Let's remove the route rules before moving on:
 
 ```bash
-oc delete routerule --all
+oc delete routerule --all -n ${ISTIO_LAB_PROJECT}
 ```
 
 ## Congratulations!
