@@ -44,9 +44,9 @@ to our `$PATH`:
 
 ```bash
 export ISTIO_HOME=/opt/lab/istio-0.6.0
+export ISTIO_LAB_HOME=/opt/lab/istio-lab-summit-2018
+export ISTIO_LAB_PROJECT=istio-lab
 export PATH=${PATH}:${ISTIO_HOME}/bin
-export LAB_HOME=/opt/lab/istio-lab-summit-2018
-export LAB_PROJECT=istio-lab
 ```
 
 ## Step 2: Create Project
@@ -55,8 +55,8 @@ Create a new project to house the services used in this lab, and add
 the necessary permissions to allow the Istio containers to do privileged things:
 
 ```bash
-oc new-project $LAB_PROJECT
-oc adm policy add-scc-to-user privileged -z default -n $LAB_PROJECT
+oc new-project $ISTIO_LAB_PROJECT
+oc adm policy add-scc-to-user privileged -z default -n $ISTIO_LAB_PROJECT
 ```
 
 We'll use the `istioctl` command line to create and install Istio components to OpenShift.
@@ -67,8 +67,8 @@ Let's deploy the customer pod with its sidecar. We'll use the `kube-inject` CLI 
 inject sidecar containers to our Customer deployment:
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${LAB_HOME}/src/customer/src/main/kubernetes/Deployment.yml) -n ${LAB_PROJECT}
-oc create -f ${LAB_HOME}/src/customer/src/main/kubernetes/Service.yml -n ${LAB_PROJECT}
+oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 Since customer is the forward-most microservice (`customer -> preference -> recommendation`),
@@ -88,7 +88,7 @@ oc rollout status -w deployment/customer
 Now, test the service, which should fail:
 
 ```bash
-curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 ```
 
 > The use of `oc get route` above simply returns the public hostname of the route that we can use
@@ -103,8 +103,8 @@ Let's deploy the preferences pod with its sidecar. We'll again use the `kube-inj
 
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${LAB_HOME}/src/preference/src/main/kubernetes/Deployment.yml) -n ${LAB_PROJECT}
-oc create -f ${LAB_HOME}/src/preference/src/main/kubernetes/Service.yml -n ${LAB_PROJECT}
+oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 Since preference service is an intermediate service (`customer -> preference -> recommendation`),
@@ -119,7 +119,7 @@ oc rollout status -w deployment/preference
 Now, test the customer service again (which will call the preference service), which should fail:
 
 ```bash
-curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 ```
 
 You should see `customer => 503 preference => I/O error on GET request for "http://recommendation:8080": recommendation; nested exception is java.net.UnknownHostException: recommendation`
@@ -137,8 +137,8 @@ provide additional control over traffic between services.
 Let's deploy the recommendations `v1` pod with its sidecar.
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment.yml) -n ${LAB_PROJECT}
-oc create -f ${LAB_HOME}/src/recommendation/src/main/kubernetes/Service.yml -n ${LAB_PROJECT}
+oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
 Since the recommendation service is at the end of our service chain (`customer -> preference -> recommendation`),
@@ -158,7 +158,7 @@ Now, test the customer service again (which will call the preference service whi
 the recommendation service). Now that it's all deployed, it should work:
 
 ```bash
-curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 ```
 
 You should see: `customer => preference => recommendation v1 from '99634814-sf4cl': 1`.`
@@ -173,7 +173,7 @@ We can experiment with Istio routing rules by deploying a second version of the 
 service:
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment-v2.yml) -n ${LAB_PROJECT}
+oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment-v2.yml) -n ${ISTIO_LAB_PROJECT}
 ```
 
 You can see both versions of the recommendation pods running using `oc get pods`:
@@ -192,7 +192,7 @@ so that both `v1` and `v2` pods get equal amounts of traffic:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 
@@ -210,7 +210,7 @@ Now, you will see double the number of requests to `v2` than for `v1`:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 
@@ -244,7 +244,7 @@ OpenShift cluster is how you configure routing rules for Istio.
 In this case, let's route all traffic to `v2`:
 
 ```bash
-oc create -f ${LAB_HOME}/src/istiofiles/route-rule-recommendation-v2.yml -n ${PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v2.yml -n ${PROJECT}
 ```
 
 Inspect the rule:
@@ -258,7 +258,7 @@ And now access the `customer` service 10 times - all requests should end up talk
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 
@@ -267,7 +267,7 @@ done
 Now let's move everyone to `v1`:
 
 ```bash
-oc replace -f ${LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
+oc replace -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
 ```
 
 > NOTE: We use `oc replace` instead of `oc create` since we are overlaying the previous rule
@@ -276,7 +276,7 @@ And test again:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 
@@ -286,14 +286,14 @@ Now let's go back to the start, and remove the rules to get back to default roun
 of requests:
 
 ```bash
-oc delete -f ${LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
+oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1.yml -n ${PROJECT}
 ```
 
 And test again:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 Traffic should be equally split once again.
@@ -303,7 +303,7 @@ Traffic should be equally split once again.
 To start the process, let's send 10% of the users to the `v2` version, to do a canary test:
 
 ```bash
-oc create -f ${LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2.yml -n ${PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2.yml -n ${PROJECT}
 ```
 
 Inspect the rule:
@@ -318,7 +318,7 @@ Now let's send in 10 requests:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 You should see only 1 request to `v2`, and 9 requests (90%) to `v1`. In reality you may get
@@ -328,14 +328,14 @@ it 10 million times you should get approximately 1 million requests to `v2`.
 Now let's move it to a 75/25 split:
 
 ```bash
-oc create -f ${LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2_75_25.yml -n ${PROJECT}
+oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v1_and_v2_75_25.yml -n ${PROJECT}
 ```
 
 And issue 10 more requests:
 
 ```bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://$(oc get route customer -n ${ISTIO_ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
 done
 ```
 Now you should see 2 or 3 requests (~25%) going to `v2`. This process can be continued (and automated), slowly migrating
