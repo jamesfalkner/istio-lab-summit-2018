@@ -22,7 +22,7 @@ oc patch deployment recommendation -p "{\"spec\":{\"template\":{\"spec\":{\"cont
 
 ## Step 3
 
-Apply  the istio time rule `istioctl create -f istiofiles/route-rule-recommendation-timeout.yml -n tutorial`
+Apply  the istio time rule `istioctl create -f istiofiles/route-rule-recommendation-timeout.yml -n istio-lab`
 
 ## Step 4
 
@@ -32,7 +32,7 @@ Verify if timeout is happening as expected
 #!/bin/bash
 while true
 do
-time curl customer-tutorial.$(minishift ip).nip.io
+time curl customer-istio-lab.$(minishift ip).nip.io
 sleep .1
 done
 ```
@@ -41,18 +41,18 @@ You will see it return v1 OR "upstream request timeout" after waiting about 1 se
 
 ```sh
 customer => 503 preference => 504 upstream request timeout
-curl customer-tutorial.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.035 total
+curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.035 total
 customer => preference => recommendation v1 from '2039379827-h58vw': 210
-curl customer-tutorial.$(minishift ip).nip.io  0.01s user 0.00s system 36% cpu 0.025 total
+curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 36% cpu 0.025 total
 customer => 503 preference => 504 upstream request timeout
-curl customer-tutorial.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.034 total
+curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.034 total
 ```
 
 ## Cleanup 
 
 Let's now clean up the timeout istio rule
 
-`istioctl delete routerule recommendation-timeout -n tutorial`
+`istioctl delete routerule recommendation-timeout -n istio-lab`
 
 # Congratulations
 

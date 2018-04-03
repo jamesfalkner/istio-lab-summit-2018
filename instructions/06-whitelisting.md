@@ -11,7 +11,7 @@ In this lab we will learn how to **Whitelist** i.e. to control the service to se
 Create the **Whitelist** rules, this rule makes the _preferences_ services accessible only from the _recommendation_ service
 
 ```sh
-istioctl create -f src/istiofiles/acl-whitelist.yml -n tutorial
+istioctl create -f src/istiofiles/acl-whitelist.yml -n istio-lab
 ```
 
 ## Step 2
@@ -19,13 +19,13 @@ istioctl create -f src/istiofiles/acl-whitelist.yml -n tutorial
 Lets now test the **Whitelisting** by calling the service directly:
 
 ```sh
-curl customer-tutorial.$(minishift ip).nip.io 
+curl customer-istio-lab.$(minishift ip).nip.io 
 ```
 
 Invoking the above curl command should result in:
 
 ```sh
-customer => 404 NOT_FOUND:preferencewhitelist.listchecker.tutorial:customer is not whitelisted
+customer => 404 NOT_FOUND:preferencewhitelist.listchecker.istio-lab:customer is not whitelisted
 ```
 
 Trying to access the customer service returns `HTTP 404`, as preference service is accessible only from the recommendation service.
@@ -35,7 +35,7 @@ Trying to access the customer service returns `HTTP 404`, as preference service 
 Lets rollback the changes that were done for this **Whitelisting** lab:
 
 ```sh
-istioctl delete -f src/istiofiles/acl-whitelist.yml -n tutorial
+istioctl delete -f src/istiofiles/acl-whitelist.yml -n istio-lab
 ```
 
 # Congratulations
