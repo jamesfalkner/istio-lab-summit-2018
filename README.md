@@ -33,10 +33,20 @@ curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/ma
   bash /dev/stdin $(hostname)
 ```
 
-Once connected, run the following command:
+You may need to supply a key to use, in which case:
+
+~/ws/istio-lab-summit-2018/scripts/connect.sh  openshift-d2f1.rhpds.opentlc.com ~/Downloads/summit_lab_rsa
 
 ```bash
-~/start.sh
+curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/master/scripts/connect.sh | \
+  bash /dev/stdin $(hostname) PATH_TO_RSA_KEY
+```
+
+Once connected, run the following commands:
+
+```bash
+sudo -E -i
+$ISTIO_LAB_HOME/scripts/start.sh
 ```
 
 This script will startup OpenShift and leave you at a command prompt, ready to start the labs.
