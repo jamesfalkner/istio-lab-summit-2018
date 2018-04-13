@@ -124,6 +124,6 @@ oc delete routerule/recommendation-v2-retry routerule/recommendation-v2-503  -n 
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)

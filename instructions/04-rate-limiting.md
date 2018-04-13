@@ -93,6 +93,6 @@ oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)

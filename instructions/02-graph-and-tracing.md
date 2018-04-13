@@ -175,6 +175,6 @@ Stop the endless `curl` loop with `CTRL-C` in the running terminal (or just clos
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)
