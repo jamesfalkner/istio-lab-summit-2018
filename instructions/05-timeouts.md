@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./04-rate-limiting.md"><span><<</span></a></div>
+<div style="float: right"><a href="./06-whitelisting.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Timeout
 
 In this Lab you wil lean how to induce timeout for a service as part of Istio Service Mesh.
@@ -103,3 +109,8 @@ Congratulations you have successfully learned how to create and apply an Istio T
 * [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+
+<div>
+ <div style="float: left"><a href="./04-rate-limiting.md"><span><<</span></a></div>
+<div style="float: right"><a href="./06-whitelisting.md"><span>>></span></a></div>
+<div>

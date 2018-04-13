@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./06-whitelisting.md"><span><<</span></a></div>
+<div style="float: right"><a href="./08-extra-credit.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Access Control - Blacklisting
 
 In this lab we will learn how to **Blacklist** a service i.e. to make one service inaccessible to other service(s) within the service mesh.
@@ -48,3 +54,7 @@ Congratulations you have successfully learnt how to define Access Control via **
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
 
+<div>
+ <div style="float: left"><a href="./06-whitelisting.md"><span><<</span></a></div>
+<div style="float: right"><a href="./08-extra-credit.md"><span>>></span></a></div>
+<div>

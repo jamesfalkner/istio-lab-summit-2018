@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Basic Routing
 
 There are three different super simple microservices in this lab and they are chained together in the following sequence:
@@ -37,16 +43,6 @@ istio-pilot-1861292947-25hnm     2/2       Running   0          4m
 jaeger-210917857-2w24f           1/1       Running   0          4m
 prometheus-168775884-dr5dm       1/1       Running   0          4m
 servicegraph-1100735962-tdh78    1/1       Running   0          4m
-```
-
-Let's set a few environment variables to use later on and add the istio CLI tools
-to our `$PATH`:
-
-```bash
-export ISTIO_HOME=/opt/lab/istio-0.6.0
-export ISTIO_LAB_HOME=/opt/lab/istio-lab-summit-2018
-export ISTIO_LAB_PROJECT=istio-lab
-export PATH=${PATH}:${ISTIO_HOME}/bin
 ```
 
 ## Step 2: Create Project
@@ -353,9 +349,13 @@ In this lab you learned how to deploy microservices to form a _service mesh_ usi
 You also learned how to do traffic shaping and routing using _Route Rules_ which instruct
 the Istio sidecar proxies to distribute traffic according to specified policy.
 
-
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+<div>

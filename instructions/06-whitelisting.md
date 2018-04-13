@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./05-timeouts.md"><span><<</span></a></div>
+<div style="float: right"><a href="./07-blacklisting.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Access Control - Whitelisting
 
 In this lab we will learn how to **Whitelist** i.e. to control the service to service access within
@@ -63,3 +69,8 @@ Congratulations you have successfully learned how to define Access Control via *
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./05-timeouts.md"><span><<</span></a></div>
+<div style="float: right"><a href="./07-blacklisting.md"><span>>></span></a></div>
+<div>

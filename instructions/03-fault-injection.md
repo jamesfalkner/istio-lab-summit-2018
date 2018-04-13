@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./02-graph-and-tracing.md"><span><<</span></a></div>
+<div style="float: right"><a href="./04-rate-limiting.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Fault Injection
 
 This exercise shows how to inject faults and test the resiliency of your application. Istio provides a set of failure
@@ -124,6 +130,11 @@ oc delete routerule/recommendation-v2-retry routerule/recommendation-v2-503  -n 
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./02-graph-and-tracing.md"><span><<</span></a></div>
+<div style="float: right"><a href="./04-rate-limiting.md"><span>>></span></a></div>
+<div>

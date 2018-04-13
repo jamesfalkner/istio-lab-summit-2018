@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./07-blacklisting.md"><span><<</span></a></div>
+<div style="float: right"><span>&nbsp;</span></div>
+<div>
+<br/>
+
 # Lab Title
 
 Brief intro text (2 sentences max)
@@ -16,6 +22,11 @@ Brief intro text (2 sentences max)
 
 # References
 
-* [Istio Homepage](https://istio.io)
 * [Red Hat OpenShift](https://openshift.com)
-* Others...
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./07-blacklisting.md"><span><<</span></a></div>
+<div style="float: right"><span>&nbsp;</span></div>
+<div>
