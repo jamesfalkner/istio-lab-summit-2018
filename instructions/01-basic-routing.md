@@ -39,16 +39,6 @@ prometheus-168775884-dr5dm       1/1       Running   0          4m
 servicegraph-1100735962-tdh78    1/1       Running   0          4m
 ```
 
-Let's set a few environment variables to use later on and add the istio CLI tools
-to our `$PATH`:
-
-```bash
-export ISTIO_HOME=/opt/lab/istio-0.6.0
-export ISTIO_LAB_HOME=/opt/lab/istio-lab-summit-2018
-export ISTIO_LAB_PROJECT=istio-lab
-export PATH=${PATH}:${ISTIO_HOME}/bin
-```
-
 ## Step 2: Create Project
 
 Create a new project to house the services used in this lab, and add

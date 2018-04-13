@@ -42,6 +42,16 @@ curl -kL https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/ma
   bash /dev/stdin $(hostname) PATH_TO_RSA_KEY
 ```
 
+Let's set a few environment variables to use later on and add the istio CLI tools
+to our `$PATH`:
+
+```bash
+export ISTIO_HOME=/opt/lab/istio-0.6.0
+export ISTIO_LAB_HOME=/opt/lab/istio-lab-summit-2018
+export ISTIO_LAB_PROJECT=istio-lab
+export PATH=${PATH}:${ISTIO_HOME}/bin
+```
+
 Once connected, run the following commands:
 
 ```bash
