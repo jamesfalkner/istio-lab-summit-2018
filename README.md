@@ -61,3 +61,7 @@ $ISTIO_LAB_HOME/scripts/start.sh
 
 This script will startup OpenShift and leave you at a command prompt, ready to start the labs.
 
+<div>
+ <div style="float: left"><span>&nbsp;</span></div>
+<div style="float: right"><a href="./instructions/00-intro.md"><span>>></span></a></div>
+<div>

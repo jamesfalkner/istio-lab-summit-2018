@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./03-fault-injection.md"><span><<</span></a></div>
+<div style="float: right"><a href="./05-timeouts.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Rate Limiting
 
 In this step we will use Istio's Quota Management feature to apply
@@ -96,3 +102,8 @@ oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./03-fault-injection.md"><span><<</span></a></div>
+<div style="float: right"><a href="./05-timeouts.md"><span>>></span></a></div>
+<div>

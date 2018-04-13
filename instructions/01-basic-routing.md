@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Basic Routing
 
 There are three different super simple microservices in this lab and they are chained together in the following sequence:
@@ -348,3 +354,8 @@ the Istio sidecar proxies to distribute traffic according to specified policy.
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+<div>

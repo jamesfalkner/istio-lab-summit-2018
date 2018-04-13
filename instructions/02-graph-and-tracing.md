@@ -1,3 +1,9 @@
+<div>
+ <div style="float: left"><a href="./01-basic-routing.md"><span><<</span></a></div>
+<div style="float: right"><a href="./03-fault-injection.md"><span>>></span></a></div>
+<div>
+<br/>
+
 # Service Mesh Visualizations and Tracing
 
 In this exercise you'll look at some of the out-of-the-box tools that
@@ -208,3 +214,8 @@ Stop the endless `curl` loop with `CTRL-C` in the running terminal (or just clos
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
+
+<div>
+ <div style="float: left"><a href="./01-basic-routing.md"><span><<</span></a></div>
+<div style="float: right"><a href="./03-fault-injection.md"><span>>></span></a></div>
+<div>
