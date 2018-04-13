@@ -1,6 +1,8 @@
 # Timeout
 
-In this Lab you wil lean how to induce timeout for a service as part of Istio Service Mesh.  With timeout set the service mesh will return failure if it does not get response within **N** seconds.
+In this Lab you wil lean how to induce timeout for a service as part of Istio Service Mesh.
+With timeout set the service mesh will return failure if it does not get response within **N** seconds.
+
 
 ## What you will learn
 
@@ -8,55 +10,93 @@ How to handle timeout with services that are deployed in Istio Service Mesh.
 
 ## Step 1
 
-At this point, no other route rules should be in effect. `oc get routerules` and `oc delete routerule <rulename>` if there are some.
+At this point, no other route rules should be in effect. Run `oc get routerules` and `oc delete routerule --all` if there are some.
 
 ## Step 2
 
-Change the configuration of `recommendation` service to use the docker image `recommendation:L5-v2` which has the time simulation code.
+Change the configuration of `recommendation:v2` service to use the container image `recommendation:v2d` which has a built-in delay of 3 seconds.
 
 ```sh
-CONTAINER_NAME="recommendation"
-IMAGE="recommendation:v2d"
-oc patch deployment recommendation -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${CONTAINER_NAME}\",\"image\":\"${IMAGE}\"}]}}}}"
+oc patch deployment recommendation-v2 -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"recommendation\",\"image\":\"${ISTIO_LAB_PROJECT}/recommendation:v2d\"}]}}}}"
+```
+
+Then test that the 3 second delay works as expected:
+
+```
+HOST=$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')
+while true ; do time curl $HOST ; sleep .1 ; done
+```
+The output should show access to `recommendation:v1` is immediate (`real 0m0.042s`) and the
+access to `recommendation:v2` takes about 3 seconds (`real 0m3.038s`):
+
+```console
+customer => preference => recommendation v1 from '5b67985cb9-bwhj7': 203
+
+real	0m0.042s
+user	0m0.004s
+sys	0m0.010s
+customer => preference => recommendation v2 from '6ccff46b59-7gjfm': 14
+
+real	0m3.038s
+user	0m0.005s
+sys	0m0.011s
 ```
 
 ## Step 3
 
-Apply  the istio time rule `istioctl create -f istiofiles/route-rule-recommendation-timeout.yml -n istio-lab`
+Apply the istio time rule:
+
+```sh
+oc create -f $ISTIO_LAB_HOME/src/istiofiles/route-rule-recommendation-timeout.yml -n $ISTIO_LAB_PROJECT
+```
+
+This will cause istio to only wait 1 second before timing out and returning `HTTP 503`. Since the `recommendation:v2` service
+now has a 3 second delay, this should cause Istio to immediately timeout after 1s and return a `503` error for access to
+`recommendation:v2`.
 
 ## Step 4
 
-Verify if timeout is happening as expected 
+Verify if timeout is happening as expected
 
-```sh
-#!/bin/bash
-while true
-do
-time curl customer-istio-lab.$(minishift ip).nip.io
-sleep .1
-done
+```bash
+HOST=$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')
+while true ; do time curl $HOST ; sleep .1 ; done
 ```
 
-You will see it return v1 OR "upstream request timeout" after waiting about 1 second
+Output should be:
 
-```sh
+```console
 customer => 503 preference => 504 upstream request timeout
-curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.035 total
-customer => preference => recommendation v1 from '2039379827-h58vw': 210
-curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 36% cpu 0.025 total
+
+real	0m1.043s
+user	0m0.006s
+sys	0m0.006s
 customer => 503 preference => 504 upstream request timeout
-curl customer-istio-lab.$(minishift ip).nip.io  0.01s user 0.00s system 0% cpu 1.034 total
+
+real	0m1.035s
+user	0m0.005s
+sys	0m0.008s
+customer => 503 preference => 504 upstream request timeout
+
+real	0m1.035s
+user	0m0.006s
+sys	0m0.007s
 ```
+
+You will see it return "504 upstream request timeout" after waiting about 1 second (`real 0m1.035s`) for each attempt
 
 ## Cleanup 
 
-Let's now clean up the timeout istio rule
+Let's now clean up the timeout istio rule and revert back to the non-delayed `recommendation-v2`:
 
-`istioctl delete routerule recommendation-timeout -n istio-lab`
+```sh
+oc delete routerule --all -n $ISTIO_LAB_PROJECT
+oc patch deployment recommendation-v2 -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"recommendation\",\"image\":\"${ISTIO_LAB_PROJECT}/recommendation:v2\"}]}}}}"
+```
 
 # Congratulations
 
-Congratulations you have successfully learnt how to create and apply an Istio Timeout Route Rule.
+Congratulations you have successfully learned how to create and apply an Istio Timeout Route Rule.
 
 # References
 

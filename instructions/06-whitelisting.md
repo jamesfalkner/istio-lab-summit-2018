@@ -1,46 +1,62 @@
 # Access Control - Whitelisting
 
-In this lab we will learn how to **Whitelist** i.e. to control the service to service access within the service mesh.
+In this lab we will learn how to **Whitelist** i.e. to control the service to service access within
+the service mesh.
 
 ## What you will learn
 
-* Define **Whitelist** access control rules
+How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html).
 
 ## Step 1
 
-Create the **Whitelist** rules, this rule makes the _preferences_ services accessible only from the _recommendation_ service
+Create the **Whitelist** rules, this rule makes the `preference` services accessible only from the `recommendation` service
+(effectively making the `customer` service unable to call the `preference` service and breaking our
+usual `customer -> preference -> recommendation` chain):
 
 ```sh
-istioctl create -f src/istiofiles/acl-whitelist.yml -n istio-lab
+oc create -f $ISTIO_LAB_HOME/src/istiofiles/acl-whitelist.yml -n $ISTIO_LAB_PROJECT
 ```
 
 ## Step 2
 
-Lets now test the **Whitelisting** by calling the service directly:
+Lets now test the **Whitelisting** by calling the `customer` service:
 
 ```sh
-curl customer-istio-lab.$(minishift ip).nip.io 
+HOST=$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')
+curl $HOST
 ```
 
 Invoking the above curl command should result in:
 
-```sh
+```console
 customer => 404 NOT_FOUND:preferencewhitelist.listchecker.istio-lab:customer is not whitelisted
 ```
 
-Trying to access the customer service returns `HTTP 404`, as preference service is accessible only from the recommendation service.
+Trying to access the `recommendation` service from the `customer` service returns `HTTP 404`, as preference service is accessible only from the recommendation service.
+
+> NOTE: It may take a few seconds before the whitelist is in effect. If you do not get the above `404` error,
+keep trying! There is a time lag between the time Istio configuration changes are made and when they come into
+effect. This time delay [can be tuned](https://github.com/istio/istio/issues/1485) to make a tradeoff between configuration change responsiveness and CPU
+usage needed to discover and act on the configuration change.
 
 ## Step 3
 
 Lets rollback the changes that were done for this **Whitelisting** lab:
 
 ```sh
-istioctl delete -f src/istiofiles/acl-whitelist.yml -n istio-lab
+oc delete -f $ISTIO_LAB_HOME/src/istiofiles/acl-whitelist.yml -n $ISTIO_LAB_PROJECT
+```
+
+And verify the services work again as expected:
+
+```sh
+curl $HOST
+customer => preference => recommendation v1 from '5b67985cb9-bwhj7': 235
 ```
 
 # Congratulations
 
-Congratulations you have successfully learnt how to define Access Control via **Whitelisting** inside a Istio service mesh
+Congratulations you have successfully learned how to define Access Control via **Whitelisting** inside a Istio service mesh
 
 # References
 

@@ -4,21 +4,22 @@ In this lab we will learn how to **Blacklist** a service i.e. to make one servic
 
 ## What you will learn
 
-* Define **Blacklist** access control rules
+How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html).
 
 ## Step 1
 
 Lets create the rule to define the **Blacklisting**,  this rule will prevent the _preference_ service inaccessible to _customer_ service 
 
 ```sh
-istioctl create -f src/istiofiles/acl-blacklist.yml -n istio-lab
+oc create -f $ISTIO_LAB_HOME/src/istiofiles/acl-blacklist.yml -n $ISTIO_LAB_PROJECT
 ```
 ## Step 2
 
 Lets test the **Blacklist** rules:
 
 ```sh
-curl customer-istio-lab.$(minishift ip).nip.io
+HOST=$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')
+curl $HOST
 ```
 
 When we tried to access the customer service, it will return `HTTP 403` forbidden error as the customer service cant access the preference service.   
@@ -34,7 +35,7 @@ customer => 403 PERMISSION_DENIED:denycustomerhandler.denier.istio-lab:Not allow
 Let's rollback the **Blacklist** rules:
 
 ```sh
-istioctl delete -f src/istiofiles/acl-blacklist.yml -n istio-lab
+oc delete -f $ISTIO_LAB_HOME/src/istiofiles/acl-blacklist.yml -n $ISTIO_LAB_PROJECT
 ``` 
 
 # Congratulations
