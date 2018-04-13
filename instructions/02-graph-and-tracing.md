@@ -10,6 +10,12 @@ existing apps without having to echange them.
 * How to access various consoles (tracing, monitoring, visualization)
 * How to use these to improve your app performance and architecture
 
+## Getting console urls
+
+Make a note of the grafana, jaeger-query, prometheus and servicegraph console urls for your respective environment.  The following screenshot shows how to find them via OpenShift web console:
+
+![OpenShift Web Console](imgs/lab2_console_urls.png)
+
 ## Visualize the network
 
 The Servicegraph service is an example service that provides endpoints for generating and visualizing a graph of services within a mesh. It exposes the following endpoints:
@@ -20,6 +26,12 @@ The Servicegraph service is an example service that provides endpoints for gener
 * `/dotviz` which provides a static representation of the servicegraph
 
 ## Examine Service Graph
+
+Open the service graph url in Web Browser, get the servicegraph application url via the console and open it in the browser by adding the path  `/forcegraph.html?time_horizon=5m&filter_empty=true`.
+
+e.g. a typical url will be like `http://servicegraph-istio-system.176.126.90.91.xip.io/force/forcegraph.html?time_horizon=5m&filter_empty=true`
+
+(or)
 
 Run this command to open the URL for the Service Graph:
 
@@ -69,6 +81,12 @@ oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_requestcount.yml -n
 
 Open the Prometheus UI:
 
+Open the Prometheus url in Web Browser, get the prometheus application url via the console and open it in the browser.
+
+e.g. a typical url will be like `http://prometheus-istio-system.176.126.90.91.xip.io`
+
+(or)
+
 ```bash
 open "http://$(oc get route prometheus -n istio-system --template='{{ .spec.host }}')"
 ```
@@ -96,6 +114,12 @@ overwhelming. [Grafana](https://grafana.com/) provides a visual representation o
 metrics extracted from the Istio data plane and can be used to quickly spot problems and take action.
 
 Open the Grafana Dashboard:
+
+Open the Grafana url in Web Browser, get the grafana application url via the console and open it in the browser by adding the following extra path to it `/dashboard/db/istio-dashboard`
+
+e.g. a typical url will be like `http://grafana-istio-system.176.126.90.91.xip.io/dashboard/db/istio-dashboard`
+
+(or)
 
 ```bash
 open "http://$(oc get route grafana -n istio-system --template='{{ .spec.host }}')/dashboard/db/istio-dashboard"
@@ -151,6 +175,12 @@ Whereas the _Preference_ Java service is instantiating the tracer bean directly 
 in `$ISTIO_LAB_HOME/src/preference/src/main/java/com/redhat/developer/demos/preference/PreferencesApplication.java`.
 
 First, open the Jaeger console:
+
+Open the Jaeger url in Web Browser, get the Jaeger UI application url via the console and open it in the browser.
+
+e.g. a typical url will be like `http://jaeger-query-istio-system.176.126.90.91.xip.io`
+
+(or)
 
 ```bash
 open "http://$(oc get route jaeger-query -n istio-system --template='{{ .spec.host }}')"
