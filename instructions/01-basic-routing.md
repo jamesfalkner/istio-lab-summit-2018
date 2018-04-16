@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
-<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./00-intro.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -356,6 +356,6 @@ the Istio sidecar proxies to distribute traffic according to specified policy.
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./00-intro.md"><span><<</span></a></div>
-<div style="float: right"><a href="./02-graph-and-tracing.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./00-intro.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./02-graph-and-tracing.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>

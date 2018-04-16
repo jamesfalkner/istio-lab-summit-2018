@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./06-whitelisting.md"><span><<</span></a></div>
-<div style="float: right"><a href="./08-extra-credit.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./06-whitelisting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./08-extra-credit.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -55,6 +55,6 @@ Congratulations you have successfully learnt how to define Access Control via **
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./06-whitelisting.md"><span><<</span></a></div>
-<div style="float: right"><a href="./08-extra-credit.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./06-whitelisting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./08-extra-credit.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>

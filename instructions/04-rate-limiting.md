@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./03-fault-injection.md"><span><<</span></a></div>
-<div style="float: right"><a href="./05-timeouts.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./03-fault-injection.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./05-timeouts.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -104,6 +104,6 @@ oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./03-fault-injection.md"><span><<</span></a></div>
-<div style="float: right"><a href="./05-timeouts.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./03-fault-injection.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./05-timeouts.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>

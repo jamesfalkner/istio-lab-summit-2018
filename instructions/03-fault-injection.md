@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./02-graph-and-tracing.md"><span><<</span></a></div>
-<div style="float: right"><a href="./04-rate-limiting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./02-graph-and-tracing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./04-rate-limiting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -69,14 +69,12 @@ done
 ```
 
 You will notice many requests to the customer endpoint now have a delay (the rule injects a 7 second delay half the time when
-the `recommendation` service is called). You can also see this in Jaeger:
+the `recommendation` service is called).
 
-```bash
-open "http://$(oc get route jaeger-query -n istio-system --template='{{ .spec.host }}')"
-```
-
-Select `recommendation` from the **Service** drop-down and click **Find Traces**. Some traces are fast, but some traces will
-show the delay:
+You can also see this in Jaeger by opening
+the Jaeger console once again (see above for how to access the URL).
+Select `recommendation` from the **Service** drop-down and click **Find Traces**.
+Some traces are fast, but some traces will show the delay:
 
 ![Delay](imgs/delay.png)
 
@@ -135,6 +133,6 @@ oc delete routerule/recommendation-v2-retry routerule/recommendation-v2-503  -n 
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./02-graph-and-tracing.md"><span><<</span></a></div>
-<div style="float: right"><a href="./04-rate-limiting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./02-graph-and-tracing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./04-rate-limiting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>

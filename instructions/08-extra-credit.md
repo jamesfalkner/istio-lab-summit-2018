@@ -1,5 +1,5 @@
 <div>
- <div style="float: left"><a href="./07-blacklisting.md"><span><<</span></a></div>
+ <div style="float: left"><a href="./07-blacklisting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
 <div style="float: right"><span>&nbsp;</span></div>
 <div>
 <br/>
@@ -27,6 +27,5 @@ Brief intro text (2 sentences max)
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./07-blacklisting.md"><span><<</span></a></div>
-<div style="float: right"><span>&nbsp;</span></div>
+ <div style="float: left"><a href="./07-blacklisting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
 <div>

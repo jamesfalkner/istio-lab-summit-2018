@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./05-timeouts.md"><span><<</span></a></div>
-<div style="float: right"><a href="./07-blacklisting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./05-timeouts.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./07-blacklisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -71,6 +71,6 @@ Congratulations you have successfully learned how to define Access Control via *
 * [Istio Homepage](https://istio.io)
 
 <div>
- <div style="float: left"><a href="./05-timeouts.md"><span><<</span></a></div>
-<div style="float: right"><a href="./07-blacklisting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./05-timeouts.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./07-blacklisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>

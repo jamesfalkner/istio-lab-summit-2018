@@ -1,6 +1,6 @@
 <div>
- <div style="float: left"><a href="./04-rate-limiting.md"><span><<</span></a></div>
-<div style="float: right"><a href="./06-whitelisting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./04-rate-limiting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./06-whitelisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
 <br/>
 
@@ -111,6 +111,6 @@ Congratulations you have successfully learned how to create and apply an Istio T
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 
 <div>
- <div style="float: left"><a href="./04-rate-limiting.md"><span><<</span></a></div>
-<div style="float: right"><a href="./06-whitelisting.md"><span>>></span></a></div>
+ <div style="float: left"><a href="./04-rate-limiting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
+<div style="float: right"><a href="./06-whitelisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
 <div>
