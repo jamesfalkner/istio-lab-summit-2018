@@ -4,27 +4,19 @@
 <div>
 <br/>
 
-# Lab Title
+# Congratulations!
 
-Brief intro text (2 sentences max)
+If you've made it this far, congratulations! You've learned the basics of the service mesh
+concept using OpenShift and Istio.
 
-## What you will learn
+But you've only scratched the surface of the power of the service mesh for your containerized
+applications on OpenShift. For a more in-depth journey with Istio and OpenShift, Please
+visit the online tutorial [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh),
+which is available 24 hours a day and provides a much more comprehensive set of exercises
+that cannot be covered in the short time we have today.
 
-* You'll learn this
-* And this
-* And this...
+Congratulations on making it this far and we hope you enjoy the rest of Red Hat Summit 2018!
 
-## Step 1
-
-## Step 2
-
-## Step 3
-
-# References
-
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
 
 <div>
  <div style="float: left"><a href="./07-blacklisting.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
