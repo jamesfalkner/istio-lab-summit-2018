@@ -89,6 +89,9 @@ while true; do
 done
 ```
 
+> NOTE: After opening a new terminal window you will need to connect to your lab machine before issuing the
+above commands. Refer to the [Introduction](00-intro.md#opening-more-terminals) section for details on opening new terminals.
+
 This command will endlessly access the application and report the HTTP status result in a separate terminal window.
 
 With this application load running, metrics will become much more interesting in the next few steps.
