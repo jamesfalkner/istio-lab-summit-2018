@@ -1,6 +1,4 @@
 #!/bin/bash
-# increase max vm memory map space (see https://github.com/openshift-istio/origin/issues/4)
-sysctl vm.max_map_count=262144
 
 oc cluster up --istio \
   --public-hostname="$LC_MYIP" \
