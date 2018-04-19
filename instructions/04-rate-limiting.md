@@ -76,7 +76,7 @@ for i in $(seq 20); do
 done
 ```
 
-The first attempt to access `recommendation:v2` will succeed:
+The first or second attempt to access `recommendation:v2` will succeed:
 
 `customer => preference => recommendation v2 from '5445bf797-zmvdq': 635`
 

@@ -34,16 +34,33 @@ oc get pods -n istio-system
 
 You should see:
 ```console
-NAME                             READY     STATUS    RESTARTS   AGE
-grafana-3617079618-4qs2b         1/1       Running   0          4m
-istio-ca-1363003450-tfnjp        1/1       Running   0          4m
-istio-ingress-1005666339-vrjln   1/1       Running   0          4m
-istio-mixer-465004155-zn78n      3/3       Running   0          5m
-istio-pilot-1861292947-25hnm     2/2       Running   0          4m
-jaeger-210917857-2w24f           1/1       Running   0          4m
-prometheus-168775884-dr5dm       1/1       Running   0          4m
-servicegraph-1100735962-tdh78    1/1       Running   0          4m
+NAME                                      READY     STATUS      RESTARTS   AGE
+elasticsearch-0                           1/1       Running     5          6m
+elasticsearch-1                           1/1       Running     0          1m
+grafana-6f4fd4986f-n6jzv                  1/1       Running     0          6m
+istio-ca-ddb878d84-n29fq                  1/1       Running     0          8m
+istio-ingress-76b5496c58-rw888            1/1       Running     0          8m
+istio-mixer-56f49dc667-hjw8b              3/3       Running     0          8m
+istio-mixer-validator-65c7fccc64-jw6t4    1/1       Running     0          8m
+istio-pilot-76dd785958-s96k6              2/2       Running     0          8m
+istio-sidecar-injector-599d8c454c-pbptf   1/1       Running     0          7m
+jaeger-agent-wszq4                        1/1       Running     0          4m
+jaeger-collector-b86c6bf8d-sh6hm          1/1       Running     0          27s
+jaeger-query-6c8c85454-rdm45              1/1       Running     0          27s
+openshift-ansible-istio-job-7dxqw         0/1       Completed   0          10m
+prometheus-cf8456855-rhhlq                1/1       Running     0          6m
 ```
+
+Istio consists of a number of components, and you should wait for it to be completely initialized before continuing.
+Execute the following commands to wait for the deployment to complete and result `deployment xxxxxx successfully rolled out` for each component:
+
+```bash
+for i in istio-ca istio-ingress istio-mixer istio-mixer-validator istio-pilot istio-sidecar-injector jaeger-collector jaeger-query prometheus grafana ; do
+  oc rollout status -n istio-system -w deployment/$i
+done
+```
+
+> If the above commands timeout or otherwise do not report success, simply re-run until all components report success!
 
 ## Step 2: Create Project
 
@@ -59,13 +76,23 @@ We'll use the `oc` command line to create and install Istio components to OpenSh
 
 ## Step 3: Deploy Customer service
 
-Let's deploy the customer pod with its sidecar. We'll use the `kube-inject` CLI to manually
-inject sidecar containers to our Customer deployment:
+Let's deploy the customer pod with its sidecar. The sidecar proxt will automatically be injected:
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
-oc create -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Deployment.yml
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/customer/src/main/kubernetes/Service.yml
 ```
+
+Inspect the pod:
+
+```bash
+oc get pods -l app=customer
+NAME                        READY     STATUS    RESTARTS   AGE
+customer-5f74465b89-4m82t   2/2       Running   0          2h
+```
+
+You can see the `customer` pod has 2 containers (the `2/2`) running in it: the customer service, and the automatically
+injected sidecar proxy.
 
 Since customer is the forward-most microservice (`customer -> preference -> recommendation`),
 let's add an OpenShift Route that exposes that endpoint:
@@ -76,10 +103,11 @@ oc expose svc/customer
 
 And wait for it to completely roll out and receive a `deployment xxxxxx successfully rolled out` result:
 
-
 ```bash
 oc rollout status -w deployment/customer
 ```
+
+> If this command times out or otherwise fails, run it again until it reports success!
 
 Now, test the service, which should fail:
 
@@ -95,12 +123,11 @@ This is because the _preferences_ service is not yet deployed.
 
 ## Step 4: Deploy Preferences service
 
-Let's deploy the preferences pod with its sidecar. We'll again use the `kube-inject` CLI:
-
+Let's deploy the preferences pod with its sidecar automatically attached:
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
-oc create -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Deployment.yml
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/preference/src/main/kubernetes/Service.yml
 ```
 
 Since preference service is an intermediate service (`customer -> preference -> recommendation`),
@@ -133,8 +160,8 @@ provide additional control over traffic between services.
 Let's deploy the recommendations `v1` pod with its sidecar.
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment.yml) -n ${ISTIO_LAB_PROJECT}
-oc create -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Service.yml -n ${ISTIO_LAB_PROJECT}
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment.yml
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Service.yml
 ```
 
 Since the recommendation service is at the end of our service chain (`customer -> preference -> recommendation`),
@@ -169,7 +196,7 @@ We can experiment with Istio routing rules by deploying a second version of the 
 service:
 
 ```bash
-oc apply -f <(istioctl kube-inject -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment-v2.yml) -n ${ISTIO_LAB_PROJECT}
+oc create -n ${ISTIO_LAB_PROJECT} -f ${ISTIO_LAB_HOME}/src/recommendation/src/main/kubernetes/Deployment-v2.yml
 ```
 
 You can see both versions of the recommendation pods running using `oc get pods`:

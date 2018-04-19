@@ -33,7 +33,7 @@ You can inject 503’s, for approximately 50% of the requests:
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-503.yml -n ${ISTIO_LAB_PROJECT}
 ```
 
-And then access the service 10 times:
+After a few seconds, access the service 10 times:
 
 ```bash
 for i in $(seq 10); do

@@ -50,7 +50,7 @@ sys	0m0.011s
 
 ## Step 3
 
-Apply the istio time rule:
+Apply the istio timeout rule:
 
 ```sh
 oc create -f $ISTIO_LAB_HOME/src/istiofiles/route-rule-recommendation-timeout.yml -n $ISTIO_LAB_PROJECT

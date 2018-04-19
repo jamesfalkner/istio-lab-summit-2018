@@ -63,7 +63,7 @@ The Servicegraph service is an example service that provides endpoints for gener
 
 ## Examine Service Graph
 
-Open the service graph url in Web Browser, get the servicegraph application url via the console and open it in the browser by adding the path  `/forcegraph.html?time_horizon=5m&filter_empty=true`.
+Open the service graph url in Web Browser, get the servicegraph application url via the console and open it in the browser by adding the path  `/force/forcegraph.html?time_horizon=5m&filter_empty=true`.
 
 e.g. a typical url will be like `http://servicegraph-istio-system.176.126.90.91.xip.io/force/forcegraph.html?time_horizon=5m&filter_empty=true`
 
