@@ -34,7 +34,7 @@ Send all safari users to **recommendation v2**
 ```sh
 oc create -f $ISTIO_LAB_HOME/src/istiofiles/route-rule-safari-recommendation-v2.yml -n tutorial -n $ISTIO_LAB_PROJECT
 
-istioctl get routerules -n tutorial
+oc get routerules -n $ISTIO_LAB_PROJECT
 ```
 ## Step 3 
 
@@ -55,10 +55,10 @@ you should see the above command sending all requests to **recommendation v1**.
 
 ## Step 4
 
-Lets remove the Safari rule
+Lets remove the Safari rule and the `v1` rule:
 
 ```sh
-istioctl delete routerule recommendation-safari -n $ISTIO_LAB_PROJECT
+oc delete routerule --all -n $ISTIO_LAB_PROJECT
 ```
 
 # Congratulations!
