@@ -1,9 +1,3 @@
-<div>
- <div style="float: left"><a href="./05-timeouts.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./07-blacklisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>
-<br/>
-
 # Access Control - Whitelisting
 
 In this lab we will learn how to **Whitelist** i.e. to control the service to service access within
@@ -19,24 +13,23 @@ Create the **Whitelist** rules, this rule makes the `preference` services access
 (effectively making the `customer` service unable to call the `preference` service and breaking our
 usual `customer -> preference -> recommendation` chain):
 
-```sh
+~~~sh
 oc create -f $ISTIO_LAB_HOME/src/istiofiles/acl-whitelist.yml -n $ISTIO_LAB_PROJECT
-```
+~~~
 
 ## Step 2
 
 Lets now test the **Whitelisting** by calling the `customer` service:
 
-```sh
-HOST=$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')
-curl $HOST
-```
+~~~sh
+curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
+~~~
 
 Invoking the above curl command should result in:
 
-```console
+~~~console
 customer => 404 NOT_FOUND:preferencewhitelist.listchecker.istio-lab:customer is not whitelisted
-```
+~~~
 
 Trying to access the `recommendation` service from the `customer` service returns `HTTP 404`, as preference service is accessible only from the recommendation service.
 
@@ -49,16 +42,16 @@ usage needed to discover and act on the configuration change.
 
 Lets rollback the changes that were done for this **Whitelisting** lab:
 
-```sh
+~~~sh
 oc delete -f $ISTIO_LAB_HOME/src/istiofiles/acl-whitelist.yml -n $ISTIO_LAB_PROJECT
-```
+~~~
 
 And verify the services work again as expected:
 
-```sh
-curl $HOST
+~~~sh
+curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 customer => preference => recommendation v1 from '5b67985cb9-bwhj7': 235
-```
+~~~
 
 # Congratulations
 
@@ -69,8 +62,3 @@ Congratulations you have successfully learned how to define Access Control via *
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
-
-<div>
- <div style="float: left"><a href="./05-timeouts.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./07-blacklisting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>

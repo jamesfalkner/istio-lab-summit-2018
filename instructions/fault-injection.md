@@ -1,9 +1,3 @@
-<div>
- <div style="float: left"><a href="./02-graph-and-tracing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./04-rate-limiting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>
-<br/>
-
 # Fault Injection
 
 This exercise shows how to inject faults and test the resiliency of your application. Istio provides a set of failure
@@ -29,25 +23,25 @@ By default, recommendation v1 and v2 are being randomly load-balanced as that is
 
 You can inject 503’s, for approximately 50% of the requests:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-503.yml -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 After a few seconds, access the service 10 times:
 
-```bash
+~~~bash
 for i in $(seq 10); do
-  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 done
-```
+~~~
 
 You should see about half the time a failure `customer => 503 preference => 503 fault filter abort`.
 
 Remove the fault injector:
 
-```bash
+~~~bash
 oc delete routerule/recommendation-503 -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 ## Delay
 
@@ -56,17 +50,17 @@ responding slowly, potentially causing a cascading failure in your network of se
 
 Inject a delay:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-delay.yml -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 Then hit the customer endpoint repeatedly:
 
-```bash
+~~~bash
 while true; do
-  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 done
-```
+~~~
 
 You will notice many requests to the customer endpoint now have a delay (the rule injects a 7 second delay half the time when
 the `recommendation` service is called).
@@ -80,9 +74,9 @@ Some traces are fast, but some traces will show the delay:
 
 Remove the delay:
 
-```bash
+~~~bash
 oc delete routerule/recommendation-delay -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 ## Retry
 
@@ -90,49 +84,44 @@ Here we can force Istio to retry failed service calls so that the application do
 
 We will use Istio and return HTTP Error 503 about 50% of the time. Send all users to `v2` which will throw out some 503’s:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v2_503.yml -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 Now, if you hit the customer endpoint several times, you should see some 503’s:
 
-```bash
+~~~bash
 for i in $(seq 20); do
-  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 done
-```
+~~~
 
 Now add the retry rule to make Istio retry when a 503 is received:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/route-rule-recommendation-v2_retry.yml -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 After a few seconds, things will settle down and the calls should succeed 100% of the time as Istio will retry whenever
 a 503 is received:
 
-```bash
+~~~bash
 for i in $(seq 20); do
-  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 done
-```
+~~~
 
 > You may need to wait up to 30 seconds for the retry rule to take effect. Just run the above command again if you see
 any `503`'s. You should eventually not see any.
 
 Cleanup the retries and injected faults:
 
-```bash
+~~~bash
 oc delete routerule/recommendation-v2-retry routerule/recommendation-v2-503  -n ${ISTIO_LAB_PROJECT}
-```
+~~~
 
 # References
 
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
-
-<div>
- <div style="float: left"><a href="./02-graph-and-tracing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./04-rate-limiting.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>

@@ -1,8 +1,3 @@
-<div>
- <div style="float: left"><a href="./03-fault-injection.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./05-timeouts.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>
-<br/>
 
 # Rate Limiting
 
@@ -25,28 +20,28 @@ Rate limits are examples of quotas, and are handled by the
 
 First, add a rate limit handler:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.yml
-```
+~~~
 
 Then, add the actual quota rule which will reference the handler when deciding whether to allow traffic:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/rate_limit_rule.yml
-```
+~~~
 
 This configuration specifies a default 1 qps (query per second) rate limit. Traffic reaching
 the `recommendation:v2` service from the `preference` service is subject to a 1qps rate limit.
 
 Take a look at the new rule:
 
-```bash
+~~~bash
 oc get memquota handler -n istio-system -o yaml
-```
+~~~
 
 In particular, notice the _dimension_ that causes the rate limit to be applied:
 
-```yaml
+~~~yaml
 - dimensions:
     destination: recommendation
     destinationVersion: v2
@@ -54,7 +49,7 @@ In particular, notice the _dimension_ that causes the rate limit to be applied:
   maxAmount: 1
   validDuration: 1s
 validDuration: 1s
-```
+~~~
 
 You can also conditionally rate limit based on other dimensions, such as:
 
@@ -69,12 +64,11 @@ You can also conditionally rate limit based on other dimensions, such as:
 With the quota in place for `recommendation:v2` let's hit it as fast as we can and observe the `429 Too Many Requests` HTTP
 error generated as a result of the quota:
 
-```bash
-URL="http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+~~~bash
 for i in $(seq 20); do
-  curl $URL
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
 done
-```
+~~~
 
 The first or second attempt to access `recommendation:v2` will succeed:
 
@@ -92,18 +86,13 @@ call to `v2` every second. Rate limiting in action!
 
 Remove the rate limit:
 
-```bash
+~~~bash
 oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/rate_limit_rule.yml
 oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.yml
-```
+~~~
 
 # References
 
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
-
-<div>
- <div style="float: left"><a href="./03-fault-injection.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./05-timeouts.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>

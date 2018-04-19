@@ -1,9 +1,3 @@
-<div>
- <div style="float: left"><a href="./01-basic-routing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./03-fault-injection.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>
-<br/>
-
 # Service Mesh Visualizations and Tracing
 
 In this exercise you'll look at some of the out-of-the-box tools that
@@ -19,38 +13,24 @@ existing apps without having to echange them.
 ## Access OpenShift Web Console
 
 OpenShift also provides a feature rich Web Console that provides a friendly graphical interface for
-interacting with the platform. The URL for your web console can be seen using the following command:
+interacting with the platform. Open the [OpenShift Web Console]({{OPENSHIFT_MASTER}}/console).
 
-```bash
-# oc cluster status
-
-Web console URL: https://xx.xx.xx.xx:8443/console/
-...
-```
-
-Open the web console URL in your browser, accept the self-signed certificate warning,
-and you'll arrive at the login screen. Login with:
+Accept the self-signed certificate warning, and you'll arrive at the login screen. Login with:
 
 * **Username**: `admin`
 * **Password**: `admin`
 
-![OpenShift Login](imgs/login.png)
+![OpenShift Login]({% image_path login.png %})
 
 Once logged in, click on the `istio-system` project on the right:
 
-![Console project](imgs/projects.png)
+![Console project]({% image_path projects.png %})
 
 > NOTE: If you do not see the `istio-system` project, you may need to click on `View All`!
 
 Make a note of the `grafana`, `jaeger-query`, `prometheus` and `servicegraph` console URLs for your respective environment.  The following screenshot shows how to find them via OpenShift web console:
 
-![OpenShift Web Console](imgs/lab2_console_urls.png)
-
-These endpoints can also be listed using the `oc` command:
-
-```bash
-oc get route -n istio-system
-```
+![OpenShift Web Console]({% image_path lab2_console_urls.png %})
 
 ## Visualize the network
 
@@ -63,13 +43,11 @@ The Servicegraph service is an example service that provides endpoints for gener
 
 ## Examine Service Graph
 
-Open the service graph url in Web Browser, get the servicegraph application url via the console and open it in the browser by adding the path  `/force/forcegraph.html?time_horizon=5m&filter_empty=true`.
-
-e.g. a typical url will be like `http://servicegraph-istio-system.176.126.90.91.xip.io/force/forcegraph.html?time_horizon=5m&filter_empty=true`
+Open the [Service Graph](http://servicegraph-istio-system.{{APPS_SUFFIX}}/force/forcegraph.html?time_horizon=5m&filter_empty=true) visualization.
 
 It should look like:
 
-![Force graph](imgs/forcegraph.png)
+![Force graph]({% image_path forcegraph.png %})
 
 This shows you a graph of the services and how they are connected, with some basic access metrics like
 how many requests per second each service receives.
@@ -82,15 +60,15 @@ a high-level telemetry showing the rate at which services are accessed.
 To get a better idea of the power of metrics, let's setup an endless loop that will continually access
 the application and generate load. We'll open up a separate terminal just for this purpose. Execute this command:
 
-```bash
+~~~bash
 while true; do
-  curl "http://$(oc get route customer -n ${ISTIO_LAB_PROJECT} --template='{{ .spec.host }}')"
+  curl "http://customer-${ISTIO_LAB_PROJECT}.{{APPS_SUFFIX}}"
   sleep .5
 done
-```
+~~~
 
 > NOTE: After opening a new terminal window you will need to connect to your lab machine before issuing the
-above commands. Refer to the [Introduction](00-intro.md#opening-more-terminals) section for details on opening new terminals.
+above commands. Refer to the [Introduction](intro.md#opening-more-terminals) section for details on opening new terminals.
 
 This command will endlessly access the application and report the HTTP status result in a separate terminal window.
 
@@ -106,13 +84,11 @@ can be seen inside of the Prometheus dashboard.
 
 First, add a custom metric:
 
-```bash
+~~~bash
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_requestcount.yml -n istio-system
-```
+~~~
 
-Open the Prometheus url in Web Browser, get the prometheus application url via the console and open it in the browser.
-
-e.g. a typical url will be like `http://prometheus-istio-system.176.126.90.91.xip.io`
+Open the [Prometheus Console](http://prometheus-istio-system.{{APPS_SUFFIX}}) in your Web Browser.
 
 In the “Expression” input box at the top of the web page, enter the text:
 `round(increase(istio_recommendation_request_count{destination=~"recommendation.*" }[60m]))`
@@ -120,7 +96,7 @@ In the “Expression” input box at the top of the web page, enter the text:
 Then, click the **Execute** button, and then the **Graph** tab. You should see the graph of the number of accesses to
 the `recommendation` service (you may need to adjust the interval to `5m` (5 minutes) as seen in the screenshot)
 
-![Prometheus console](imgs/prom.png)
+![Prometheus console]({% image_path prom.png %})
 
 Other expressions to try:
 
@@ -136,11 +112,9 @@ As the number of services and interactions grows in your application, this style
 overwhelming. [Grafana](https://grafana.com/) provides a visual representation of many available Prometheus
 metrics extracted from the Istio data plane and can be used to quickly spot problems and take action.
 
-Open the Grafana url in Web Browser, get the grafana application url via the console and open it in the browser by adding the following extra path to it `/dashboard/db/istio-dashboard`
+Open the [Grafana Console](http://grafana-istio-system.{{APPS_SUFFIX}}/dashboard/db/istio-dashboard). It should look like:
 
-e.g. a typical url will be like `http://grafana-istio-system.176.126.90.91.xip.io/dashboard/db/istio-dashboard`
-
-![Grafana graph](imgs/grafana.png)
+![Grafana graph]({% image_path grafana.png %})
 
 The Grafana Dashboard for Istio consists of three main sections:
 
@@ -150,7 +124,7 @@ The Grafana Dashboard for Istio consists of three main sections:
 
 Scroll down to the see the stats for the `customer`, `preference` and `recommendation` services:
 
-![Grafana graph](imgs/grafana-svcs.png)
+![Grafana graph]({% image_path grafana-svcs.png %})
 
 These graph shows which other services are accessing each service. You can see that
 the `preference` service is calling the `recommendation:v1` and `recommendation:v2` service
@@ -182,28 +156,24 @@ There are different ways to configure the tracer. The _Customer_ Java service in
 which does not require any code changes and the whole configuration is defined in environmental variables whose names
 begin with `JAEGER_`. Run this command to execute the `env` command inside the running container to see them:
 
-```bash
+~~~bash
 oc rsh -c customer $(oc get pods --selector app=customer -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}') env | grep JAEGER_
-```
+~~~
 
 Whereas the _Preference_ Java service is instantiating the tracer bean directly in its Spring configuration class
 in `$ISTIO_LAB_HOME/src/preference/src/main/java/com/redhat/developer/demos/preference/PreferencesApplication.java`.
 
-First, open the Jaeger console:
-
-Open the Jaeger url in Web Browser, get the Jaeger UI application url via the console and open it in the browser.
-
-e.g. a typical url will be like `http://jaeger-query-istio-system.176.126.90.91.xip.io`
+First, open the [Jaeger Console](http://jaeger-query-istio-system.{{APPS_SUFFIX}}).
 
 Next, select _customer_ in the **Service** drop-down, and then click **Find traces**. You should see a list of recent
 traces:
 
-![Jaeger traces](imgs/jaeger-traces.png)
+![Jaeger traces]({% image_path jaeger-traces.png %})
 
 Click on one of them to display detailed info, showing the access from `customer` -> `preference` -> `recommendation` and the
 time each call took:
 
-![Jaeger traces](imgs/trace.png)
+![Jaeger traces]({% image_path trace.png %})
 
 This can be useful in identifying critical paths and bottlenecks in your apps, and make architectural
 improvements to increase performance or fix timing or other issues in your code.
@@ -217,8 +187,3 @@ Stop the endless `curl` loop with `CTRL-C` in the running terminal (or just clos
 * [Red Hat OpenShift](https://openshift.com)
 * [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
 * [Istio Homepage](https://istio.io)
-
-<div>
- <div style="float: left"><a href="./01-basic-routing.md"><span>&lt;&lt;&nbsp;Previous</span></a></div>
-<div style="float: right"><a href="./03-fault-injection.md"><span>Next&nbsp;&gt;&gt;</span></a></div>
-<div>

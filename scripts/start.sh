@@ -53,3 +53,20 @@ spec:
 EOF
 
 oc expose svc/servicegraph -n istio-system
+
+# deploy workshopper guides
+oc new-project guides
+oc new-app osevg/workshopper --name=istio-workshop \
+      -e CONTENT_URL_PREFIX=https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/master/instructions \
+      -e WORKSHOPS_URLS="https://raw.githubusercontent.com/jamesfalkner/istio-lab-summit-2018/master/instructions/_rhsummit18.yml" \
+      -e JAVA_APP=false \
+      -e OPENSHIFT_MASTER="https://$LC_MYIP:8443" \
+      -e APPS_SUFFIX="$LC_MYIP.xip.io" \
+      -e ISTIO_LAB_HOSTNAME="$(hostname)"
+
+oc expose svc/istio-workshop
+echo
+echo "--------------------"
+echo "Setup complete. Open the Lab Instructions in your browser: http://istio-workshop-guides.$LC_MYIP.xip.io"
+echo "--------------------"
+echo
