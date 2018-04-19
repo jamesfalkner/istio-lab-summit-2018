@@ -13,45 +13,7 @@ oc adm policy add-cluster-role-to-user cluster-admin admin
 oc adm policy add-scc-to-user anyuid -z istio-ingress-service-account -n istio-system
 
 # add servicegraph
-cat <<EOF | oc create -n istio-system -f -
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: servicegraph
-  namespace: istio-system
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: servicegraph
-      annotations:
-        sidecar.istio.io/inject: "false"
-    spec:
-      containers:
-      - name: servicegraph
-        image: docker.io/istio/servicegraph:0.7.1
-        imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 8088
-        args:
-        - --prometheusAddr=http://prometheus:9090
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: servicegraph
-  namespace: istio-system
-spec:
-  ports:
-  - name: http
-    port: 8088
-  selector:
-    app: servicegraph
----
-EOF
-
+oc create -n istio-system -f ${ISTIO_LAB_HOME}/istiofiles/servicegraph-deployment.yml
 oc expose svc/servicegraph -n istio-system
 
 # deploy workshopper guides
