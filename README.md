@@ -47,6 +47,7 @@ assigned a GUID (a 4-digit alphanumeric string). For example, `xxxx`.
 ### Execute connect script
 
 To connect to your provisioned lab machine, run the following command:
+
 **MAKE SURE THAT YOU SUBSTITUTE `xxxx` FOR THE GUID THAT YOU WERE ASSIGNED**
 
 ~~~bash
@@ -69,6 +70,7 @@ echo Path: $PATH
 ### Start OpenShift and install Istio
 All of the exercises in this lab will be performed as the `root` system user.
 First, escalate your privileges using the following `sudo` command: 
+
 **MAKE SURE THAT YOU EXECUTE THE SUDO COMMAND EXACTLY OR YOUR ENVIRONMENT
 VARIABLES WILL NOT PROPAGATE CORRECTLY**
 
