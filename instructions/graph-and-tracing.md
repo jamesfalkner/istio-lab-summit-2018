@@ -163,7 +163,7 @@ oc rsh -c customer $(oc get pods --selector app=customer -o jsonpath='{.items[?(
 Whereas the _Preference_ Java service is instantiating the tracer bean directly in its Spring configuration class
 in `$ISTIO_LAB_HOME/src/preference/src/main/java/com/redhat/developer/demos/preference/PreferencesApplication.java`.
 
-First, open the [Jaeger Console](http://jaeger-query-istio-system.{{APPS_SUFFIX}}){:target="_blank"}.
+First, open the [Jaeger Console](https://jaeger-query-istio-system.{{APPS_SUFFIX}}){:target="_blank"}.
 
 Next, select _customer_ in the **Service** drop-down, and then click **Find traces**. You should see a list of recent
 traces:
