@@ -11,7 +11,7 @@ oc adm policy add-cluster-role-to-user cluster-admin admin
 oc adm policy add-scc-to-user anyuid -z istio-ingress-service-account -n istio-system
 
 # add servicegraph
-oc create -n istio-system -f ${ISTIO_LAB_HOME}/istiofiles/servicegraph-deployment.yml
+oc create -n istio-system -f ${ISTIO_LAB_HOME}/src/istiofiles/servicegraph-deployment.yml
 oc expose svc/servicegraph -n istio-system
 
 # deploy workshopper guides
