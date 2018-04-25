@@ -13,7 +13,7 @@ existing apps without having to echange them.
 ## Access OpenShift Web Console
 
 OpenShift also provides a feature rich Web Console that provides a friendly graphical interface for
-interacting with the platform. Open the [OpenShift Web Console]({{OPENSHIFT_MASTER}}/console).
+interacting with the platform. Open the [OpenShift Web Console]({{OPENSHIFT_MASTER}}/console){:target="_blank"} .
 
 Accept the self-signed certificate warning, and you'll arrive at the login screen. Login with:
 
@@ -38,12 +38,12 @@ The Servicegraph service is an example service that provides endpoints for gener
 
 * `/graph` which provides a JSON serialization of the servicegraph
 * `/dotgraph` which provides a dot serialization of the servicegraph
-* `/force` which provides a [D3.js](https://d3js.org/)-based dynamic representation of the servicegraph
+* `/force` which provides a [D3.js](https://d3js.org/){:target="_blank"}-based dynamic representation of the servicegraph
 * `/dotviz` which provides a static representation of the servicegraph
 
 ## Examine Service Graph
 
-Open the [Service Graph](http://servicegraph-istio-system.{{APPS_SUFFIX}}/force/forcegraph.html?time_horizon=5m&filter_empty=true) visualization.
+Open the [Service Graph](http://servicegraph-istio-system.{{APPS_SUFFIX}}/force/forcegraph.html?time_horizon=5m&filter_empty=true){:target="_blank"} visualization.
 
 It should look like:
 
@@ -68,7 +68,7 @@ done
 ~~~
 
 > NOTE: After opening a new terminal window you will need to connect to your lab machine before issuing the
-above commands. Refer to the [Introduction](intro.md#opening-more-terminals) section for details on opening new terminals.
+above commands. Refer to the [Introduction](intro.md#opening-more-terminals){:target="_blank"} section for details on opening new terminals.
 
 This command will endlessly access the application and report the HTTP status result in a separate terminal window.
 
@@ -76,7 +76,7 @@ With this application load running, metrics will become much more interesting in
 
 ## Querying Metrics with Prometheus
 
-[Prometheus](https://prometheus.io/) exposes an endpoint serving generated metric values. The Prometheus
+[Prometheus](https://prometheus.io/){:target="_blank"} exposes an endpoint serving generated metric values. The Prometheus
 add-on is a Prometheus server that comes pre-configured to scrape Mixer endpoints
 to collect the exposed metrics. It provides a mechanism for persistent storage
 and querying of Istio metrics. Istio also allows you to specify custom metrics which
@@ -88,7 +88,7 @@ First, add a custom metric:
 oc create -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_requestcount.yml -n istio-system
 ~~~
 
-Open the [Prometheus Console](http://prometheus-istio-system.{{APPS_SUFFIX}}) in your Web Browser.
+Open the [Prometheus Console](http://prometheus-istio-system.{{APPS_SUFFIX}}){:target="_blank"} in your Web Browser.
 
 In the “Expression” input box at the top of the web page, enter the text:
 `round(increase(istio_recommendation_request_count{destination=~"recommendation.*" }[60m]))`
@@ -104,15 +104,15 @@ Other expressions to try:
 * Rate of requests over the past 5 minutes to all `preference` services: `rate(istio_request_count{destination_service=~"preference.*", response_code="200"}[5m])`
 
 There are many, many different queries you can perform to extract the data you need. Consult the
-[Prometheus documentation](https://prometheus.io/docs) for more detail.
+[Prometheus documentation](https://prometheus.io/docs){:target="_blank"} for more detail.
 
 ## Visualizing Metrics with Grafana
 
 As the number of services and interactions grows in your application, this style of metrics may be a bit
-overwhelming. [Grafana](https://grafana.com/) provides a visual representation of many available Prometheus
+overwhelming. [Grafana](https://grafana.com/){:target="_blank"} provides a visual representation of many available Prometheus
 metrics extracted from the Istio data plane and can be used to quickly spot problems and take action.
 
-Open the [Grafana Console](http://grafana-istio-system.{{APPS_SUFFIX}}/dashboard/db/istio-dashboard). It should look like:
+Open the [Grafana Console](http://grafana-istio-system.{{APPS_SUFFIX}}/dashboard/db/istio-dashboard){:target="_blank"}. It should look like:
 
 ![Grafana graph]({% image_path grafana.png %})
 
@@ -130,7 +130,7 @@ These graph shows which other services are accessing each service. You can see t
 the `preference` service is calling the `recommendation:v1` and `recommendation:v2` service
 equally, since the default routing is _round-robin_.
 
-For more on how to create, configure, and edit dashboards, please see the [Grafana documentation](http://docs.grafana.org/).
+For more on how to create, configure, and edit dashboards, please see the [Grafana documentation](http://docs.grafana.org/){:target="_blank"}.
 
 As a developer, you can get quite a bit of information from these metrics without doing anything to the application
 itself. Let's use our new tools in the next section to see the real power of Istio to diagnose and fix issues in
@@ -148,11 +148,11 @@ how different services contribute to the overall end-user perceived latency. In 
 it can be a valuable tool to diagnose and troubleshoot distributed applications.
 
 Tracing in Istio requires you to pass a set of headers to outbound requests. It can be done manually
-or by using the OpenTracing framework instrumentations such as [opentracing-spring-cloud](https://github.com/opentracing-contrib/java-spring-cloud). Framework instrumentation
+or by using the OpenTracing framework instrumentations such as [opentracing-spring-cloud](https://github.com/opentracing-contrib/java-spring-cloud){:target="_blank"}. Framework instrumentation
 automatically propagates tracing headers and also creates in-process spans to better understand what is
 happening inside the application.
 
-There are different ways to configure the tracer. The _Customer_ Java service in this lab is using [tracerresolver](https://github.com/jaegertracing/jaeger-client-java/tree/master/jaeger-tracerresolver)
+There are different ways to configure the tracer. The _Customer_ Java service in this lab is using [tracerresolver](https://github.com/jaegertracing/jaeger-client-java/tree/master/jaeger-tracerresolver){:target="_blank"}
 which does not require any code changes and the whole configuration is defined in environmental variables whose names
 begin with `JAEGER_`. Run this command to execute the `env` command inside the running container to see them:
 
@@ -163,7 +163,7 @@ oc rsh -c customer $(oc get pods --selector app=customer -o jsonpath='{.items[?(
 Whereas the _Preference_ Java service is instantiating the tracer bean directly in its Spring configuration class
 in `$ISTIO_LAB_HOME/src/preference/src/main/java/com/redhat/developer/demos/preference/PreferencesApplication.java`.
 
-First, open the [Jaeger Console](http://jaeger-query-istio-system.{{APPS_SUFFIX}}).
+First, open the [Jaeger Console](http://jaeger-query-istio-system.{{APPS_SUFFIX}}){:target="_blank"}.
 
 Next, select _customer_ in the **Service** drop-down, and then click **Find traces**. You should see a list of recent
 traces:
@@ -184,6 +184,6 @@ Stop the endless `curl` loop with `CTRL-C` in the running terminal (or just clos
 
 # References
 
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}
+* [Istio Homepage](https://istio.io){:target="_blank"}

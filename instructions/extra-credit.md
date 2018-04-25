@@ -2,8 +2,7 @@
 
 In this lab we will learn how to do **Smart Routing** with Istio route rules using user agent request header.
 
-What is your user-agent? 
-https://www.whoishostingthis.com/tools/user-agent/
+[What is your user-agent?](https://www.whoishostingthis.com/tools/user-agent/){:target="_blank"}
 
 **NOTE**: 
 

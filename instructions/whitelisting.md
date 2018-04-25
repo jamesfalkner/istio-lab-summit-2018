@@ -5,7 +5,7 @@ the service mesh.
 
 ## What you will learn
 
-How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html).
+How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html){:target="_blank"}.
 
 ## Step 1
 
@@ -35,7 +35,7 @@ Trying to access the `recommendation` service from the `customer` service return
 
 > NOTE: It may take a few seconds before the whitelist is in effect. If you do not get the above `404` error,
 keep trying! There is a time lag between the time Istio configuration changes are made and when they come into
-effect. This time delay [can be tuned](https://github.com/istio/istio/issues/1485) to make a tradeoff between configuration change responsiveness and CPU
+effect. This time delay [can be tuned](https://github.com/istio/istio/issues/1485){:target="_blank"} to make a tradeoff between configuration change responsiveness and CPU
 usage needed to discover and act on the configuration change.
 
 ## Step 3
@@ -59,6 +59,6 @@ Congratulations you have successfully learned how to define Access Control via *
 
 # References
 
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}
+* [Istio Homepage](https://istio.io){:target="_blank"}

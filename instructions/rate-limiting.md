@@ -14,7 +14,7 @@ based on rules called _dimensions_. Quotas are used as a relatively
 simple resource management tool to provide some fairness between
 service consumers when contending for limited resources.
 Rate limits are examples of quotas, and are handled by the
-[Istio Mixer](https://istio.io/docs/concepts/policy-and-control/mixer.html).
+[Istio Mixer](https://istio.io/docs/concepts/policy-and-control/mixer.html){:target="_blank"}.
 
 ## Apply Quota Rules
 
@@ -57,7 +57,7 @@ You can also conditionally rate limit based on other dimensions, such as:
 * Login names (e.g. to limit certain customers or classes of customers)
 * Source/Destination hostnames, IP addresses, DNS domains, HTTP Request header values, protocols
 * API paths
-* [Several other attributes](https://istio.io/docs/reference/config/mixer/attribute-vocabulary.html)
+* [Several other attributes](https://istio.io/docs/reference/config/mixer/attribute-vocabulary.html){:target="_blank"}
 
 ## Attempt to access app
 
@@ -93,6 +93,6 @@ oc delete -f ${ISTIO_LAB_HOME}/src/istiofiles/recommendation_rate_limit_handler.
 
 # References
 
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}
+* [Istio Homepage](https://istio.io){:target="_blank"}

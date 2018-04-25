@@ -4,7 +4,7 @@ In this lab we will learn how to **Blacklist** a service i.e. to make one servic
 
 ## What you will learn
 
-How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html).
+How to do [access control with Istio](https://istio.io/docs/tasks/security/secure-access-control.html){:target="_blank"}.
 
 ## Step 1
 
@@ -43,6 +43,6 @@ Congratulations you have successfully learnt how to define Access Control via **
 
 # References
 
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}
+* [Istio Homepage](https://istio.io){:target="_blank"}

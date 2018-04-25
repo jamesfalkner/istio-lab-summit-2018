@@ -98,6 +98,6 @@ Congratulations you have successfully learned how to create and apply an Istio T
 
 # References
 
-* [Istio Homepage](https://istio.io)
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
+* [Istio Homepage](https://istio.io){:target="_blank"}
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}

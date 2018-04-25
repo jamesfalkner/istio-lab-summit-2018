@@ -149,7 +149,7 @@ Istio introduces the concept of a service version, which is a finer-grained way 
 service instances by versions (`v1`, `v2`) or environment (`staging`, `prod`). These variants are not
 necessarily different API versions: they could be iterative changes to the same service, deployed
 in different environments (prod, staging, dev, etc.). Common scenarios where this is used include
-A/B testing or canary rollouts. Istio’s [traffic routing rules](https://istio.io/docs/concepts/traffic-management/rules-configuration.html) can refer to service versions to
+A/B testing or canary rollouts. Istio’s [traffic routing rules](https://istio.io/docs/concepts/traffic-management/rules-configuration.html){:target="_blank"} can refer to service versions to
 provide additional control over traffic between services.
 
 Let's deploy the recommendations `v1` pod with its sidecar.
@@ -373,7 +373,7 @@ the Istio sidecar proxies to distribute traffic according to specified policy.
 
 # References
 
-* [Red Hat OpenShift](https://openshift.com)
-* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh)
-* [Istio Homepage](https://istio.io)
+* [Red Hat OpenShift](https://openshift.com){:target="_blank"}
+* [Learn Istio on OpenShift](https://learn.openshift.com/servicemesh){:target="_blank"}
+* [Istio Homepage](https://istio.io){:target="_blank"}
 
