@@ -70,7 +70,7 @@ the Jaeger console once again (see above for how to access the URL).
 Select `recommendation` from the **Service** drop-down and click **Find Traces**.
 Some traces are fast, but some traces will show the delay:
 
-![Delay](imgs/delay.png)
+![Delay]({% image_path delay.png %})
 
 Remove the delay:
 
