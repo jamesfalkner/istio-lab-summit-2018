@@ -4,4 +4,4 @@ if [ ! -z "$2" ]
 fi
 
 export LC_MYIP=`dig $1 +short`
-ssh -o SendEnv=LC_MYIP $IDENTITY l1012@$1
+ssh -o SendEnv=LC_MYIP $IDENTITY lab-user@$1
